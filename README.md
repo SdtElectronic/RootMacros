@@ -1,5 +1,5 @@
 # CERN Root Macros
-Macros For Visualization and Discrete Data Analysis On[CERN Root](https://root.cern/)
+Macros For Visualization and Discrete Data Analysis On [CERN Root](https://root.cern/)
 
 ## Demos
 
@@ -17,7 +17,7 @@ Draw functions with stem plot style.
 
 #### stemP()
 
-`stemP(const TF1& func, const char* opt = "aps", double ll = 0, double ul = 0)`
+`std::shared_ptr<TGraphAsymmErrors> stemP(const TF1& func, const char* opt = "aps", double ll = 0, double ul = 0)`
 
 Parameters
 
@@ -25,4 +25,6 @@ Parameters
 * opt Draw options  ***For TGraph***
 * lo Minimum value on X axis
 * ul Maximum value on X axis
-![`DrawP(stemP(TF1("sa", "sin(x)/(x)", -12, 12)))`](https://github.com/SdtElectronic/RootMacros/blob/master/ScrShot/sa.png "stemP Demo")
+![Sa Function plotted by stemP](https://github.com/SdtElectronic/RootMacros/blob/master/ScrShot/sa.png "stemP Demo")
+
+`DrawP(stemP(TF1("sa", "sin(x)/(x)", -12, 12)))`
