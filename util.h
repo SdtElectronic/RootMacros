@@ -14,7 +14,7 @@ auto TServ(const char* addr = "http:127.0.0.1:3120"){
 }
 
 template<typename T>
-shared_ptr<T>* DrawP(shared_ptr<T> objPtr, const char* opt = nullptr){
+shared_ptr<T>* DrawP(shared_ptr<T> objPtr, const char* opt = ""){
 	objPtr->Draw(opt);
 	return new shared_ptr<T>(objPtr);
 }
@@ -40,3 +40,4 @@ constexpr double delta = numeric_limits<double>().epsilon();
 #include "stemP.cc"
 #include "ConvP.cc"
 #include "intP.cc"
+#include "Tz.cc"
