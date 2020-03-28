@@ -1,6 +1,6 @@
 #pragma once
 
-auto ConvP(const TF1& f1,const TF1& f2, int pts = 1000, double ll = 0, double hl = 0, const char* title = " "){
+auto ConvP(const TF1& f1,const TF1& f2, unsigned int pts = 1e3, double ll = 0, double hl = 0, const char* title = nullptr){
 	if(ll == hl){
 		double rang = f1.GetXmax() - f1.GetXmin();
 		ll = f2.GetXmin() - rang;
