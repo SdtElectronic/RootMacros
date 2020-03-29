@@ -33,11 +33,45 @@ auto DrawP(const std::shared_ptr<TF1> objPtr, int npx = 0, const char* opt = nul
 	return new shared_ptr<TF1>(objPtr);
 }
 
-double stepU(double x){
-	return x < 0 ? 0 : 1;
+template<typename TO, typename TI>
+auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TI> objPtrI, const char* title = nullptr, double scale2 = 0, const char* optO = nullptr, const char* optI = nullptr){	
+	auto c1 = new TCanvas("c1");
+	auto pad = new TPad("pad","",0,0,1,1);
+	objPtrI->SetTitle(title?title:objPtrO->GetName());
+	objPtrO->SetTitle("");
+	pad->Draw();
+	pad->cd();
+	objPtrO->Draw(optO);
+	c1->cd();
+	auto overlay = new TPad("overlay","",0,0,1,1);
+	overlay->SetFillStyle(4000);
+	overlay->SetFillColor(0);
+	overlay->SetFrameFillStyle(4000);
+	overlay->Draw();
+	overlay->cd();
+	std::string opt(optI?optI:"");
+	objPtrI->SetLineColor(kBlue);
+	objPtrI->Draw((opt += "Y+").c_str());
+	/*
+	auto xMax = pad->GetUxmax();
+	auto yMin = overlay->GetUymin();
+	auto yMax = yMin + (scale2?scale2:1)*(overlay->GetUymax() - yMin);
+	auto axis = new TGaxis(xMax, yMin, xMax, yMax, yMin, yMax, 510, "+L");	
+	printf("%f %f", yMax, yMin);
+	axis->Draw();
+	*/
+	return new std::pair<shared_ptr<TO>, shared_ptr<TI>>(objPtrO, objPtrI);
 }
+
+template<typename TO>
+auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TF1> objPtrI, const char* title = nullptr, double scale2 = 0, const char* optO = nullptr, const char* optI = nullptr){	
+	string opt(optI?optI:"");
+	return DrawP<TO, TF1>(objPtrO, objPtrI, title, scale2, optO, (opt += " C").c_str());
+}
+
 
 #include "stemP.cc"
 #include "ConvP.cc"
 #include "intP.cc"
+#include "FFTP.cc"
 #include "Tz.cc"
