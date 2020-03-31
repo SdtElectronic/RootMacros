@@ -11,7 +11,7 @@ double limP(const TF1& func, double ix){
 template<typename T>
 T* DrawP(T objPtr, const char* opt = ""){
 	objPtr->Draw(opt);
-	return new shared_ptr</*typename std::decay<*/decltype(*objPtr)/*>::type*/>(objPtr);
+	return new shared_ptr<typename std::decay<decltype(*objPtr)>::type>(objPtr);
 }
 /*
 auto DrawP(std::shared_ptr<TGraphAsymmErrors> objPtr, const char* opt = "aps"){

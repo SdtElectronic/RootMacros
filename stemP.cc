@@ -1,8 +1,4 @@
-auto stemP(const TF1& func, const char* opt = "aps", double ll = 0, double ul = 0){
-	if(ll == ul){
-		ll = ceil(func.GetXmin());
-		ul = floor(func.GetXmax());
-	}
+auto stemP(const TF1& func, double ll, double ul, const char* opt = "aps"){
 	size_t len =  static_cast<size_t>(++ul - ll);
 	double ax[len], ayh[len], ayl[len], ay[len], axz[len];
 	for(double ix = ll; ix != ul; ++ix){
@@ -26,4 +22,7 @@ auto stemP(const TF1& func, const char* opt = "aps", double ll = 0, double ul = 
 	ret->SetTitle(func.GetName());
 	ret->SetMarkerStyle(4);
 	return ret;
+}
+auto stemP(const TF1& func, const char* opt = "aps"){	
+	return stemP(func, ceil(func.GetXmin()), floor(func.GetXmax()), opt);
 }

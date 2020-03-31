@@ -17,7 +17,7 @@ auto TServ(const char* addr = "http:127.0.0.1:3120"){
 }
 
 template<typename T>
-shared_ptr<T>* DrawP(shared_ptr<T> objPtr, const char* opt = nullptr){
+shared_ptr<T>* DrawP(const shared_ptr<T> objPtr, const char* opt = nullptr){
 	objPtr->Draw(opt);
 	return new shared_ptr<T>(objPtr);
 }
@@ -33,12 +33,20 @@ auto DrawP(const std::shared_ptr<TF1> objPtr, int npx = 0, const char* opt = nul
 	return new shared_ptr<TF1>(objPtr);
 }
 
+auto DrawP(std::tuple<std::shared_ptr<TF1>, std::shared_ptr<TF1>, std::shared_ptr<TGraph2D>> tp, int npx = 0, const char* opt = nullptr){	
+	auto objPtr = std::get<0>(tp);
+	objPtr->SetNpx(npx ? npx : objPtr->GetNpx());
+	objPtr->Draw(opt);
+	return new shared_ptr<TF1>(objPtr);
+}
+
 template<typename TO, typename TI>
-auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TI> objPtrI, const char* title = nullptr, double scale2 = 0, const char* optO = nullptr, const char* optI = nullptr){	
+auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TI> objPtrI, const char* title = nullptr, int npxO = 1000, double scale2 = 0, const char* optO = nullptr, const char* optI = nullptr){	
 	auto c1 = new TCanvas("c1");
 	auto pad = new TPad("pad","",0,0,1,1);
 	objPtrI->SetTitle(title?title:objPtrO->GetName());
 	objPtrO->SetTitle("");
+	objPtrO->SetNpx(npxO);
 	pad->Draw();
 	pad->cd();
 	objPtrO->Draw(optO);
@@ -64,12 +72,13 @@ auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TI> objPtrI, const char* title = n
 }
 
 template<typename TO>
-auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TF1> objPtrI, const char* title = nullptr, double scale2 = 0, const char* optO = nullptr, const char* optI = nullptr){	
+auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TF1> objPtrI, const char* title = nullptr, int npxO = 1000, double scale2 = 0, const char* optO = nullptr, const char* optI = nullptr){	
 	string opt(optI?optI:"");
-	return DrawP<TO, TF1>(objPtrO, objPtrI, title, scale2, optO, (opt += " C").c_str());
+	return DrawP<TO, TF1>(objPtrO, objPtrI, title, npxO, scale2, optO, (opt += " C").c_str());
 }
 
 
+#include "USamp.cc"
 #include "stemP.cc"
 #include "ConvP.cc"
 #include "intP.cc"

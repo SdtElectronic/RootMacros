@@ -1,8 +1,8 @@
 class Tz :public TComplex{
 	public:
 		Tz(Double_t re, Double_t im=0, Bool_t polar=kFALSE):TComplex(re, im, polar), zpol(polar){}
-		Tz(Tz& tzt):TComplex(tzt.Re(), tzt.Im(), tzt.Polar()){};
-		Tz(Tz&& tzt):TComplex(tzt.Re(), tzt.Im(), tzt.Polar()){};
+		Tz(const Tz& tzt):TComplex(tzt.Re(), tzt.Im(), tzt.Polar()){};
+		//Tz(Tz&& tzt):TComplex(tzt.Re(), tzt.Im(), tzt.Polar()){};
 		virtual ~Tz(){}
 		Tz operator ^ (double pow) const{
 			TComplex tcoTem = TComplex::Power(*this, pow);
@@ -59,8 +59,8 @@ class Tz :public TComplex{
 			(*this)(tzt.Re(), tzt.Im());
 			return *this;
 		}
-		Bool_t Polar(Bool_t pol){return zpol = pol;}
-		Bool_t Polar(void){return zpol;}
+		Bool_t Polar(Bool_t pol) {return zpol = pol;}
+		Bool_t Polar(void)const {return zpol;}
 	protected:
 		Bool_t zpol;
 
