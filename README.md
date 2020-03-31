@@ -28,3 +28,18 @@ Parameters
 ![Sa Function plotted by stemP](https://github.com/SdtElectronic/RootMacros/blob/master/ScrShot/sa.png "stemP Demo")
 
 `DrawP(stemP(TF1("sa", "sin(x)/(x)", -12, 12)))`
+
+### intP.cc
+---
+Create a TF1 which is the integral of a function.
+
+#### intP()
+
+![integral of gaus function](https://github.com/SdtElectronic/RootMacros/blob/master/ScrShot/intP.png "intP Demo")
+
+### FFTP.cc
+---
+
+#### class TFFT
+
+![FFT of sine function](https://github.com/SdtElectronic/RootMacros/blob/master/ScrShot/FFT.png "FFT Demo")

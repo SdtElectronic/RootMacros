@@ -1,7 +1,10 @@
 template<typename T>
 class USamp{	
 	public:
-	USamp(const T& samp, size_t pts, size_t ll, size_t ul): sample(samp), points(pts), lowerlim(ll), uperlim(ul){	
+	USamp(const T& samp, size_t pts, size_t ll, size_t ul): sample(samp), 
+															points(pts), 
+															lowerlim(ll), 
+															uperlim(ul){	
 
 	}
 
@@ -24,7 +27,10 @@ auto USamp<TGraph>::operator [](size_t ind){
 template<>
 class USamp<TF1>{	
 	public:
-	USamp(const TF1& samp, size_t pts, double ll, double ul): sample(samp), points(pts), lowerlim(ll), uperlim(ul){	
+	USamp(const TF1& samp, size_t pts, double ll, double ul): sample(samp), 
+															  points(pts), 
+															  lowerlim(ll), 
+															  uperlim(ul){	
 		
 	}
 	USamp(const TF1& samp, size_t pts): USamp(samp, pts, samp.GetXmin(), samp.GetXmax()){	

@@ -77,7 +77,7 @@ string strRep(string str, const string& old_value, const string& new_value){
 }
 
 auto plotZ(const char* expr, 
-		     const char* name = "f1",
+		     const char* title = nullptr,
 			 const char* dopt = "pol surf2",
 		     double mx = 0.0f, double Mx = 1.0f, 
 		     double my = -TMath::Pi(), double My = TMath::Pi()){
@@ -85,7 +85,8 @@ auto plotZ(const char* expr,
 	auto tmpStr = strRep(strRep(string(expr), string("Z"), string("Tz(y, x, kTRUE)")), 
 						 string(")("), string(")*("));
 	sstem << "TComplex::Abs(" << strRep(tmpStr, string("j"), string("TComplex(0, 1)")) << ")";
-	TF2 tftt(name, sstem.str().c_str(), my, My, mx, Mx);
+	TF2 tftt("", sstem.str().c_str(), my, My, mx, Mx);
+	tftt.SetTitle(title?title:tftt->GetTitle());
 	tftt.Draw(dopt);
 	return tftt;
 }

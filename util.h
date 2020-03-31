@@ -27,8 +27,9 @@ auto DrawP(const std::shared_ptr<TGraphAsymmErrors> objPtr, const char* opt = "a
 	return new shared_ptr<TGraphAsymmErrors>(objPtr);
 }
 
-auto DrawP(const std::shared_ptr<TF1> objPtr, int npx = 0, const char* opt = nullptr){	
+auto DrawP(const std::shared_ptr<TF1> objPtr, int npx = 0, const char* title = nullptr, const char* opt = nullptr){	
 	objPtr->SetNpx(npx ? npx : objPtr->GetNpx());
+	objPtr->SetTitle(title?title:objPtr->GetName());
 	objPtr->Draw(opt);
 	return new shared_ptr<TF1>(objPtr);
 }
@@ -82,5 +83,6 @@ auto DrawP(shared_ptr<TO> objPtrO, shared_ptr<TF1> objPtrI, const char* title = 
 #include "stemP.cc"
 #include "ConvP.cc"
 #include "intP.cc"
+#include "difP.cc"
 #include "FFTP.cc"
 #include "Tz.cc"

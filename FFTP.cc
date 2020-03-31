@@ -12,13 +12,13 @@ class TFFT{
 	}
 	template<typename T>
 	TFFT(const T& cont, int pts, double ll, double ul, const char* opt = "R2C K"): points(pts),
-																					  lowerlim(ll),
-																					  uperlim(ul),
-																					  tuperlim(pts / (ul - ll) / 2.),
-																					  fft1(TVirtualFFT::FFT(1, &pts, opt)),
-																					  TGFmag(pts),
-																					  TGFphi(pts),
-																					  TGFcmp(pts){	
+																				   lowerlim(ll),
+																				   uperlim(ul),
+																				   tuperlim(pts / (ul - ll) / 2.),
+																				   fft1(TVirtualFFT::FFT(1, &pts, opt)),
+																				   TGFmag(pts),
+																				   TGFphi(pts),
+																				   TGFcmp(pts){	
 		for(size_t i = 0; i != pts; ++i)
 			fft1->SetPoint(i, cont[i]);
 	}
@@ -28,7 +28,7 @@ class TFFT{
 	}
 
 	TFFT(const TF1& func, int pts, double ll, double ul, const char* opt = "R2C K"): TFFT(USamp<TF1>(func, pts, ll, ul), pts, ll, ul, opt){
-		
+
 	}
 	TFFT(const TF1& func, int pts, const char* opt = "R2C K"): TFFT(func, pts, func.GetXmin(), func.GetXmax(), opt){
 
@@ -93,7 +93,7 @@ class TFFT{
 		//return TFFT(USamp<TF1>(cont, pts, ll, ul), pts, ll, ul, opt).trans().GetMag();
 	}
 	*/
-	TComplex operator [](size_t ind){
+	TComplex operator [](size_t ind) const{
 		double re, im; 
 		fft1->GetPointComplex(ind, re, im);
 		return TComplex(re, im);
