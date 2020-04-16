@@ -12,6 +12,10 @@ class USamp{
 		return sample[lowerlim + ind - 1];
 	}
 	
+	size_t size(){
+		return points;
+	}
+
 	private:
 	const T& sample;
 	size_t points;
@@ -36,11 +40,16 @@ class USamp<TF1>{
 	USamp(const TF1& samp, size_t pts): USamp(samp, pts, samp.GetXmin(), samp.GetXmax()){	
 		
 	}
+	
 	auto operator [](size_t ind) const{
 		double ix = lowerlim + (uperlim-lowerlim)/(points-1.)*ind;
 		return limP(sample, ix);
 	}
 	
+	size_t size(){
+		return points;
+	}
+
 	private:
 	const TF1& sample;
 	size_t points;

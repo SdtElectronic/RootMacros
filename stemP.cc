@@ -26,3 +26,10 @@ auto stemP(const TF1& func, double ll, double ul, const char* opt = "aps"){
 auto stemP(const TF1& func, const char* opt = "aps"){	
 	return stemP(func, ceil(func.GetXmin()), floor(func.GetXmax()), opt);
 }
+
+auto stemP(const std::shared_ptr<TF1> objPtr, int npx = 0, const char* title = nullptr, const char* opt = "aps"){	
+	objPtr->SetNpx(npx ? npx : objPtr->GetNpx());
+	objPtr->SetTitle(title?title:objPtr->GetName());
+	//new shared_ptr<TF1>(objPtr);
+	return shared_ptr<TGraphAsymmErrors>(stemP(*objPtr, opt));
+}

@@ -1,5 +1,8 @@
 class TFFT{	
 	public:
+	enum transType: char{MAG = 1, PHI = 2, CMP = 4, 
+						 MAGPHI = 3, MAGCMP = 4, PHICMP = 6,
+						 MAGPHICMP = 7};
 	TFFT(): points(0),
 			lowerlim(0),
 			uperlim(0),
@@ -41,7 +44,7 @@ class TFFT{
 
 	}
 
-	TFFT& trans(void){
+	TFFT& trans(transType T = MAGPHICMP){
 		fft1->Transform();
 		double re, im; 
 		double fi = -tuperlim;
@@ -62,7 +65,11 @@ class TFFT{
 		}
 		return *this;
 	}
-
+/*
+	TFFT& trans(char T = 7){
+		return trans(static_cast<transType>(T));
+	}
+*/
 	auto GetMag(bool norm = true){
 		auto TGMcpy = std::make_shared<TGraph>(TGFmag);
 		if(norm){
@@ -76,11 +83,11 @@ class TFFT{
 
 	template<typename T>
 	static auto FFTP(const T& cont, int pts, double ll, double ul, const char* opt = "R2C K"){
-		return TFFT(cont, pts, ll, ul, opt).trans().GetMag();
+		return TFFT(cont, pts, ll, ul, opt).trans(MAG).GetMag();
 	}
 	template<typename T>
 	static auto FFTP(const T& cont, int pts, const char* opt = "R2C K"){
-		return TFFT(cont, pts, opt).trans().GetMag();
+		return TFFT(cont, pts, opt).trans().GetMag(MAG);
 	}
 	/*
 	static std::shared_ptr<TF1> FFTP(const TF1& cont, int pts, const char* opt = "R2C K"){
@@ -100,6 +107,7 @@ class TFFT{
 	}
 
 	auto operator ()(bool norm = true){
+		trans(MAGPHICMP);
 		auto TGMcpy = std::make_shared<TGraph>(TGFmag);
 		auto TGPcpy = std::make_shared<TGraph>(TGFphi);
 		auto TGCcpy = std::make_shared<TGraph2D>(TGFcmp);

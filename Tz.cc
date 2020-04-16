@@ -86,7 +86,7 @@ auto plotZ(const char* expr,
 						 string(")("), string(")*("));
 	sstem << "TComplex::Abs(" << strRep(tmpStr, string("j"), string("TComplex(0, 1)")) << ")";
 	TF2 tftt("", sstem.str().c_str(), my, My, mx, Mx);
-	tftt.SetTitle(title?title:tftt->GetTitle());
+	tftt.SetTitle(title?title:tftt.GetTitle());
 	tftt.Draw(dopt);
 	return tftt;
 }
